@@ -42,5 +42,11 @@ public class Card
 		}
 		else return false;
 	}
+	
+	public String toString()//Prints full card name
+	{
+		return value + suit;
+	}
+	//END CARD CLASS
 }
 
