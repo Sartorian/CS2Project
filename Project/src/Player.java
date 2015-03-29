@@ -24,15 +24,15 @@ public class Player
 				curr = curr.getNext();
 				j++;
 			}
-			if(curr == null)
+			if(curr == null)//if you went too far
 			{
-				System.out.println("ERROR CODE 2");
+				System.out.println("ERROR CODE 2");//index out of bounds error
 			}
-			else if(curr.getData().canPlay(d.getFront().getData()))
+			else if(curr.getData().canPlay(d.getFront().getData()))//if you can play on the discard pile
 			{
-				d.addToFront(curr.getData());
-				hand.remove(i);
-				return true;
+				d.addToFront(curr.getData());//place a copy of the card on top of the discard pile
+				hand.remove(i);//delete copy from hand
+				return true;//success. A winner is you.
 			}
 		}
 		return false;
