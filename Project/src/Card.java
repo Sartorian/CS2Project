@@ -21,6 +21,6 @@ public class Card
 		else
 			suit = "ERROR CODE 1";
 	}
-	
+	//im testing this
 }
 
