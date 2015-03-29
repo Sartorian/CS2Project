@@ -9,6 +9,17 @@ public class Player
 		hand = new LinkedListForDeck();
 		name = n;
 	}
+	public void drawCard(LinkedListForDeck d)
+	{
+		if(d.size() == 0)
+		{
+			d.replenish();//or whatever we call the method to refill the deck from the discard pile
+		}
+		else
+		{
+			
+		}
+	}
 	
 	public boolean playCard(LinkedListForDeck d, int i)
 	{
