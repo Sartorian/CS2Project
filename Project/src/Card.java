@@ -20,7 +20,8 @@ public class Card
 			suit = Reference.SPADE;
 		else
 			suit = "ERROR CODE 1";
+		
 	}
-
 }
+//This is a test
 
