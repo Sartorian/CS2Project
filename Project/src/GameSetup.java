@@ -1,4 +1,4 @@
-import java.util.Collections;
+
 
 public class GameSetup{ //This could have the makeDeck, Deal, and numberOfPlayer classes
 
@@ -27,7 +27,7 @@ public class GameSetup{ //This could have the makeDeck, Deal, and numberOfPlayer
       }
       
    public void Shuffle(){
-	   Collections.shuffle(Deck);
+	   //do stuff here I guess
    		}
    
       
