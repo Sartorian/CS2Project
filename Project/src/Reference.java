@@ -11,6 +11,7 @@ public class Reference
 	/* LIST OF ERROR CODES
 	 * 
 	 * 1: Improper suit assignment
+	 * 2: Array index out of bounds
 	 * 
 	 */
 }
