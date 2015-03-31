@@ -1,3 +1,7 @@
+import Card;
+import LinkedListForDeck;
+import NodeForDeck;
+
 
 public class UsedPile
 {
@@ -13,5 +17,17 @@ public class UsedPile
 		return cards;
 	}
 	
+	public void replenish(LinkedListForDeck d)
+    {
+    	NodeForDeck curr = cards.getFront();
+    	Card temp = null;
+    	while(curr!=null)
+    	{
+    		temp = curr.getData();
+    		cards.removeFront();
+    		d.addToFront(temp);
+    	}
+    	d.shuffleDeck();	
+    }
 	
 }
