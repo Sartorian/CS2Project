@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class LinkedListForDeck
 {
 	private NodeForDeck front;
@@ -149,7 +151,33 @@ public class LinkedListForDeck
 			count--;
 		}
 	}
-	
+	public void shuffleDeck()
+	{
+		LinkedListForDeck d = new LinkedListForDeck();
+		Random r = new Random();
+		
+		NodeForDeck curr = front;
+		
+		d.addToFront(curr.getData());
+		curr = curr.getNext();
+		
+		while(curr != null)
+		{
+			d.add(r.nextInt(d.size()), curr.getData());
+			curr = curr.getNext();
+		}
+		clear();
+		curr = null;
+		while(d.size() > 0)
+		{
+			while(curr == null)
+			{
+				curr = d.getNode(r.nextInt(d.size()));
+			}
+			this.add(r.nextInt(size()), curr.getData());
+			d.remove(curr);
+		}
+	}
 	//get a node data given an index
 	public Card get(int index)
 	{
@@ -166,5 +194,39 @@ public class LinkedListForDeck
          }
 		else
 			return(curr.getData());
+	}
+	public NodeForDeck getNode(int index)
+	{
+		NodeForDeck curr = front;
+		int i = 0;
+		while(curr != null && i != index)
+		{
+			curr = curr.getNext();
+			i++;
+		}
+		if(curr == null)
+		{
+			System.out.println("ERROR CODE 2");
+			return null;
+		}
+		else
+			return curr;
+	}
+	public void remove(NodeForDeck n)
+	{
+		NodeForDeck curr = front;
+		int i = 0;
+		
+		while(curr != n && curr != null)
+		{
+			curr = curr.getNext();
+			i++;
+		}
+		if(curr != n)
+		{
+			System.out.println("Node not in list");
+			return;
+		}
+		remove(i);
 	}
 }
