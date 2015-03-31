@@ -5,23 +5,24 @@ public class Play
 {
 	public static void main(String[] args)
 	{
-
+		
 		//
+		GameSetup gs = new GameSetup();
 		Scanner kb = new Scanner(System.in);
 		Random aiCard = new Random();
 		String playerName = "Liam Neeson";
+		
 		boolean userWin = false;
 		boolean aiWin = false;
-		Deck deck = new Deck();
+		
 		Player user = new Player(playerName);
 		Player ai = new Player("Nicolas Cage");
+		
 		//Should create the pile of played cards
 		UsedPile pile = new UsedPile();
-		deck.makeDeck();
-		deck.shuffle();
-		deck.dealAll(user, ai);
+		LinkedListForDeck deck = gs.getDeck();
 
-		System.out.println(deck.revealTop());
+		System.out.println(pile.revealTop(deck));
 
 		//
 		while(userWin == false || aiWin == false)

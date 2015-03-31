@@ -2,12 +2,15 @@
 
 public class GameSetup{ //This could have the makeDeck, Deal, and numberOfPlayer classes
 
-	private LinkedListForDeck deck = new LinkedListForDeck();
+	private LinkedListForDeck deck;
 	int players;
 
-	public GameSetup(int numberPlayers)
+	public GameSetup()
 	{
-		players = numberPlayers; //I know thats pretty tough to understand
+		//players = numberPlayers; //I know thats pretty tough to understand
+		deck = new LinkedListForDeck();
+		makeDeck();
+		Shuffle();
 	}
 
 	public void makeDeck(){
@@ -28,8 +31,13 @@ public class GameSetup{ //This could have the makeDeck, Deal, and numberOfPlayer
 		}
 	}
 
-	public void Shuffle(){
-		//do stuff here I guess
+	public void Shuffle()
+	{
+		deck.shuffleDeck();
+	}
+	public LinkedListForDeck getDeck()
+	{
+		return deck;
 	}
 
 

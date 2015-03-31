@@ -1,8 +1,3 @@
-import Card;
-import LinkedListForDeck;
-import NodeForDeck;
-
-
 public class UsedPile
 {
 	private LinkedListForDeck cards;
