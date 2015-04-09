@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.util.Random;
+//import java.util.Random;
 
 public class Play
 {
@@ -10,7 +10,7 @@ public class Play
 		//
 		GameSetup gs = new GameSetup();
 		Scanner kb = new Scanner(System.in);
-		Random aiCard = new Random();
+		//Random aiCard = new Random();
 		String playerName = "Liam Neeson";
 		
 		boolean userWin = false;
@@ -57,6 +57,7 @@ public class Play
 			if(ai.getHand().size() == 0)
 				aiWin = true;
 		}
+		kb.close();
 		if(userWin)
 			System.out.println(user.getName()+" wins!!!");
 		else if(aiWin)
