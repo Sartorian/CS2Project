@@ -3,6 +3,7 @@ import java.util.Random;
 
 public class Play
 {
+	public static UsedPile pile;
 	public static void main(String[] args)
 	{
 		
@@ -19,10 +20,10 @@ public class Play
 		Player ai = new Player("Nicolas Cage");
 		
 		//Should create the pile of played cards
-		UsedPile pile = new UsedPile();
 		LinkedListForDeck deck = gs.getDeck();
-
-		System.out.println(pile.revealTop(deck));
+		pile = new UsedPile(deck);
+		pile.revealTop();
+		System.out.println("First Card: " + pile.getCards().getFrontData());
 
 		//
 		while(userWin == false || aiWin == false)
@@ -46,7 +47,7 @@ public class Play
 			}
 			if(j == ai.getHand().size())
 			{
-				ai.drawCard(deck);
+				ai.drawCard(gs);
 				ai.playCard(pile, 0);
 			}
 			//System.out.println(pile.getCard());

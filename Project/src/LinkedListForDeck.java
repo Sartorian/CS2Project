@@ -167,6 +167,9 @@ public class LinkedListForDeck
 			curr = curr.getNext();
 		}
 		clear();
+		curr = d.getNode(r.nextInt(d.size()));
+		addToFront(curr.getData());
+		d.remove(curr);
 		curr = null;
 		while(d.size() > 0)
 		{
@@ -176,6 +179,7 @@ public class LinkedListForDeck
 			}
 			this.add(r.nextInt(size()), curr.getData());
 			d.remove(curr);
+			curr = null;
 		}
 	}
 	//get a node data given an index

@@ -16,7 +16,7 @@ public class GameSetup{ //This could have the makeDeck, Deal, and numberOfPlayer
 	public void makeDeck(){
 		char suit;
 		for (int i = 0; i < 4; i++){
-			for (int j = 0; j < 12; j++){
+			for (int j = 1; j <= 13; j++){
 				if (i == 0)
 					suit = 'c';
 				else if (i == 1)
@@ -39,8 +39,6 @@ public class GameSetup{ //This could have the makeDeck, Deal, and numberOfPlayer
 	{
 		return deck;
 	}
-
-
 
 }
 

@@ -9,19 +9,21 @@ public class Player
 		hand = new LinkedListForDeck();
 		name = n;
 	}
-	public void drawCard(LinkedListForDeck d)
+	public void drawCard(GameSetup d)
 	{
-		if(d.size() == 0)
+		if(d.getDeck().size() == 0)
 		{
-			d.replenish();//or whatever we call the method to refill the deck from the discard pile
+			Play.pile.replenish();
+			drawCard(d);
 		}
 		else
 		{
-			
+			hand.addToFront(d.getDeck().getFrontData());
+			d.getDeck().removeFront();
 		}
 	}
 	
-	public boolean playCard(LinkedListForDeck d, int i)
+	public boolean playCard(UsedPile d, int i)
 	{
 		NodeForDeck curr = hand.getFront();
 		int j = 0;
@@ -39,9 +41,9 @@ public class Player
 			{
 				System.out.println("ERROR CODE 2");//index out of bounds error
 			}
-			else if(curr.getData().canPlay(d.getFront().getData()))//if you can play on the discard pile
+			else if(curr.getData().canPlay(d.getCards().getFrontData()))//if you can play on the discard pile
 			{
-				d.addToFront(curr.getData());//place a copy of the card on top of the discard pile
+				d.getCards().addToFront(curr.getData());//place a copy of the card on top of the discard pile
 				hand.remove(i);//delete copy from hand
 				return true;//success. A winner is you.
 			}

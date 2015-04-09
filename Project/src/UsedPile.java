@@ -1,10 +1,12 @@
 public class UsedPile
 {
 	private LinkedListForDeck cards;
+	private LinkedListForDeck sourceDeck;
 	
-	public UsedPile()
+	public UsedPile(LinkedListForDeck d)
 	{
 		cards = new LinkedListForDeck();
+		sourceDeck = d;
 	}
 	
 	public LinkedListForDeck getCards()
@@ -12,17 +14,24 @@ public class UsedPile
 		return cards;
 	}
 	
-	public void replenish(LinkedListForDeck d)
+	public void replenish()
     {
+    	Card temp = cards.getFrontData();
+    	cards.removeFront();
     	NodeForDeck curr = cards.getFront();
-    	Card temp = null;
-    	while(curr!=null)
+    	while(curr != null)
     	{
-    		temp = curr.getData();
+    		sourceDeck.addToFront(curr.getData());
+    		curr = curr.getNext();
     		cards.removeFront();
-    		d.addToFront(temp);
     	}
-    	d.shuffleDeck();	
+    	sourceDeck.shuffleDeck();
+    	cards.addToFront(temp);
     }
+	public void revealTop()
+	{
+		cards.addToFront(sourceDeck.getFrontData());
+		sourceDeck.removeFront();
+	}
 	
 }
