@@ -3,11 +3,13 @@ public class Player
 {
 	private LinkedListForDeck hand;
 	private String name;
+   private static String eightSuit = "";//will help with the eight card being played and selecting a suit
 	
 	public Player(String n)
 	{
 		hand = new LinkedListForDeck();
 		name = n;
+      
 	}
 	public void drawCard(GameSetup d)
 	{
@@ -41,8 +43,15 @@ public class Player
 			{
 				System.out.println("ERROR CODE 2");//index out of bounds error
 			}
-			else if(curr.getData().canPlay(d.getCards().getFrontData()))//if you can play on the discard pile
+			else if(curr.getData().canPlay(d.getCards().getFrontData(), eightSuit))//if you can play on the discard pile
 			{
+            if (curr.getData().getValue().equals("2")){
+            }   
+            else if (curr.getData().getValue().equals("8")){
+               //eightSuit =                               //add a way for player to input their desired suit here <--- ///******
+            }
+            else if (curr.getData().getValue().equals("J")){
+            }
 				d.getCards().addToFront(curr.getData());//place a copy of the card on top of the discard pile
 				hand.remove(i);//delete copy from hand
 				return true;//success. A winner is you.

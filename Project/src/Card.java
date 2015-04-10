@@ -26,9 +26,17 @@ public class Card
 	{
 		return value;
 	}
-	public boolean canPlay(Card c)
+	public boolean canPlay(Card c, String eightSuit)
 	{
-		if(this.suit.equals(c.getSuit()))//suits are same
+      if (c.value.equals("8")){
+         if (this.value.equals(eightSuit)){
+            return true;
+            }
+         else {
+            return false;
+            }
+         }     
+		else if(this.suit.equals(c.getSuit()))//suits are same
 		{
 			return true;
 		}
