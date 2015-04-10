@@ -4,11 +4,13 @@ public class Player
 	private LinkedListForDeck hand;
 	private String name;
    private static String eightSuit = "";//will help with the eight card being played and selecting a suit
-	
-	public Player(String n)
+	private boolean ifAI;
+   
+	public Player(String n, boolean AI)
 	{
 		hand = new LinkedListForDeck();
 		name = n;
+      ifAI = AI;//allows to check for the player being AI or not
       
 	}
 	public void drawCard(GameSetup d)
@@ -48,7 +50,12 @@ public class Player
             if (curr.getData().getValue().equals("2")){
             }   
             else if (curr.getData().getValue().equals("8")){
+               if (ifAI){
+                  eightSuit = hand.getFront().getData().getSuit();//an ai will pick the suit from their first card.
+                  }
+               else {   
                //eightSuit =                               //add a way for player to input their desired suit here <--- ///******
+               }
             }
             else if (curr.getData().getValue().equals("J")){
             }

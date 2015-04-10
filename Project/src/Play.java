@@ -16,8 +16,11 @@ public class Play
 		boolean userWin = false;
 		boolean aiWin = false;
 		
-		Player user = new Player(playerName);
-		Player ai = new Player("Nicolas Cage");
+		Player user = new Player(playerName, false);//not ai
+		Player ai = new Player("Nicolas Cage", true);//ai
+      circleLinkedList playerOrder = new circleLinkedList();
+      playerOrder.addToEnd(user);
+      playerOrder.addToEnd(ai);
 		
 		//Should create the pile of played cards
 		LinkedListForDeck deck = gs.getDeck();
