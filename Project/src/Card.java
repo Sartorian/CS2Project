@@ -29,9 +29,6 @@ public class Card
 	{
 		return value;
 	}
-//<<<<<<< Updated upstream
-	public boolean canPlay(Card c, String eightSuit)
-=======
 	public int getValueNum()
 	{
 		return valueNum;
@@ -40,6 +37,10 @@ public class Card
 	{
 		return suitChar;
 	}
+
+	public boolean canPlay(Card c, String eightSuit)
+=======
+
 	public boolean canPlay(Card c)
 >>>>>>> Stashed changes
 	{

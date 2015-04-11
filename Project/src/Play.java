@@ -29,23 +29,26 @@ public class Play
 		pile.revealTop();
 		System.out.println("First Card: " + pile.getCards().getFrontData());
 		String comment = "First card: "; //<-- this once-only statement can become "" after the first turn.
+		//GUI SUBSTITUTE:
+		Gui gui = new Gui();
+		gui.makeGui(comment,
+				pile.getCards().getFrontData(), 
+				user.getName()+"'s turn", 
+				user.getHand(),
+				"Please choose the position of your card");
 		while(userWin == false || aiWin == false)
 		{
 			//System.out.println(user.getName()+"'s turn");			
 			//System.out.println(user.getHand());
 			//System.out.println("Please choose the position of your card");
 			//GUI SUBSTITUTE:
-			GUI gui = new GUI(comment,
-								pile.getCards().getFrontData(), 
-								user.getName()+"'s turn", 
-								user.getHand(),
-								"Please choose the position of your card");
 			
 			comment = null; 				//<-- so we don't have a reoccurring "First card. "
 				
 			//int i = kb.nextInt();
 			//GUI SUBSTITUTE:
-			while(!gui.answer()){}
+			while(!gui.answer()){}			//<-- a cycling method with a nested actionPerformed()
+			
 			int i = gui.inputAnswer;
 			if(!user.playCard(pile, i))
 			{
@@ -59,9 +62,11 @@ public class Play
 			System.out.println(pile.getCards().getFront());//displays top card of discard pile
 			System.out.println(ai.getName()+"'s turn");  
 			//GUI SUBSTITUTE :
-			gui.aiTurn(pile.getCards().getFront().getData(), 
-						ai.getName()+"'s turn" );	
-			int j = 0;
+			gui.makeGui(ai.getName()+"'s turn", 
+						pile.getCards().getFrontData(),    //displays top card of discard pile
+						"",
+						user.getHand(), "");		       // I think the user's hand can remain in view, while the
+			int j = 0;									   // computer takes its turn in the game.
 			while(!ai.playCard(pile, j) && j < ai.getHand().size())
 			{
 				j++;
@@ -75,8 +80,14 @@ public class Play
 
 			if(user.getHand().size() == 0)
 				userWin = true;
-			if(ai.getHand().size() == 0)
+			else if(ai.getHand().size() == 0)
 				aiWin = true;
+			else
+				gui.makeGui(user.getName()+"'s turn",
+						pile.getCards().getFrontData(), 
+						comment, 
+						user.getHand(),
+						"Please choose the position of your card");				
 		}
 		kb.close();
 		if(userWin)

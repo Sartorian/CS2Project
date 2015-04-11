@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 
-public class GUI extends JFrame {//implements ActionListener{
+public class Gui extends JFrame {//implements ActionListener{
 	
 	
 	
@@ -22,97 +22,56 @@ public class GUI extends JFrame {//implements ActionListener{
 	String[] userPngs;						//<-- the card images array for the user's hand.
 
 	boolean flag = false;
-	int inputAnswer;
+	public static int inputAnswer;
 
-	public GUI (String heresTheFirstCard, 
-					 Card card, 
-					 String whoseTurn, 
-					 LinkedListForDeck hand, 
-					 String question)
+	public Gui ()
+	{	
+	}
+		
+	public void makeGui (String heresTheFirstCard, 
+			 Card card, 
+			 String whoseTurn, 
+			 LinkedListForDeck hand, 
+			 String question)
 	{		
-	    makePanel1(heresTheFirstCard, card );
-	    makePanel2(whoseTurn, hand);
-	    makePanel3(question);
-	    layout();
-	}
-	
-	public void layout()
-	{
-		add(panel1, BorderLayout.NORTH);
-	    add(panel2, BorderLayout.CENTER);
-	    add(panel3, BorderLayout.SOUTH);
+      panel1 = new JPanel();          
+      JLabel statement = new JLabel(heresTheFirstCard);
+      panel1.add(statement);
+      
+      cardIcon = new ImageIcon(cardImageFileName(card));  
+	   panel1.add(new JLabel(cardIcon));
+      
+      panel2 = new JPanel(new GridLayout(1, hand.size() + 1));// <-- the hand of the player 
+	   panel2.add(new JLabel(whoseTurn));
 	    
-	    setTitle("Crazy Eights");
-	    setSize(500, 500);
-	    setLocationRelativeTo(null);
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setVisible(true);
-	}
-	
-	
-	public JPanel makePanel1(String heresTheFirstCard, Card card)
-	{
-		panel1 = new JPanel();  
-		JLabel statementA = new JLabel(heresTheFirstCard);
-		panel1.add(statementA);
-		
-		String filename = cardImageFileName(card);
-	    cardIcon = new ImageIcon(filename);  
-	    
-	    JLabel img = new JLabel(cardIcon);
-	    panel1.add(img);
-	    return panel1;
-	}
-	
-	public JPanel makePanel2(String whoseTurn, LinkedListForDeck hand)
-	{
-		panel2 = new JPanel(new GridLayout(1, hand.size() + 1));// <-- the hand of the player 
-	    JLabel statementB = new JLabel(whoseTurn);
-	    panel2.add(statementB);
-	    
-	    userPngs = new String[hand.size()];
-	    for (int i=0; i<hand.size(); i++)
+	   userPngs = new String[hand.size()];
+	   for (int i=0; i<hand.size(); i++)
 		{
-			String filename = cardImageFileName(hand.get(i)); 	//<-- the card's equivalent images' file name is used (i.e."1.png")
-			cardIcon = new ImageIcon(filename);   	
-			panel2.add(new JLabel(cardIcon));
+			String filename = cardImageFileName(hand.get(i)); 	//<-- the card's equivalent images' file name is used (i.e."1.png")	
+			panel2.add(new JLabel(new ImageIcon(filename)));
 		} 
-	    return panel2;
-	}
-	public JPanel makePanel3(String question)
-	{
-		panel3 = new JPanel();
-	    JLabel statementC = new JLabel(question);		//<--  at the bottom of the GUI the question is asked
-	    panel3.add(statementC);							//     either which suit or which card number to play.
+
+      panel3 = new JPanel();
+		panel3.add(new JLabel(question));              //<--  at the bottom of the GUI the question is asked
+                              							   //     either which suit or which card number to play.
 	        
-	    input = new JTextField(2);
-	    input.setEditable(true);
+	   input = new JTextField(2);
+	   input.setEditable(true);
 		panel3.add(input);
-		
-		go = new JButton("Ready");
-		panel3.add(go);
-		return panel3;
+
+      go = new JButton("Ready");
+      panel3.add(go);
+      
+      add(panel1, BorderLayout.NORTH);
+      add(panel2, BorderLayout.CENTER);
+      add(panel3, BorderLayout.SOUTH);
+      
+      setTitle("Crazy Eights");
+      setSize(300, 200);
+      setLocationRelativeTo(null);
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setVisible(true);
 	}
-	public void aiTurn(Card card, String newComment) 
-	{ 
-		makePanel1("", card);
-		makePanel2(newComment);
-		
-		String filename = cardImageFileName(card);			
-		img.setIcon(new ImageIcon(filename));
-		
-		statementB.setText(newComment);
-		
-		statementC.setText("");
-		
-		input.setEditable(false);
-	}
-	
-	public void wonOrLost(String verdict) 				 //<-- no user cards show up anymore at game end, 
-	{															 //    instead the game outcome is displayed. (font will be larger)
-		statementC.setText(verdict);
-	}
-	
 
 	public boolean answer()
 	{
@@ -121,29 +80,14 @@ public class GUI extends JFrame {//implements ActionListener{
         {
            public void actionPerformed(ActionEvent e)
            {           
-              String answer = input.getText();
-              inputAnswer = Integer.parseInt(answer);
+              String ans = input.getText();
+              inputAnswer = Integer.parseInt(ans);
               flag = true;
            }
         });   
 		return flag;
 	}
 
-
-	/*public void layout()
-	{
-		add(panel1, BorderLayout.NORTH);
-	    add(panel2, BorderLayout.CENTER);
-	    add(panel3, BorderLayout.SOUTH);
-	    
-	    setTitle("Crazy Eights");
-	    setSize(500, 500);
-	    setLocationRelativeTo(null);
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setVisible(true);
-	    //setResizable(false);
-
-	}*/
 
 	public String cardImageFileName(Card card)  //<-- returns the file name string.
 	{	
@@ -163,7 +107,10 @@ public class GUI extends JFrame {//implements ActionListener{
 				{"Blank","4","52","48","44","40","36","32","28","24","20","16","12","8"}};
 		return "" + images[suitIndex][value] + ".png";
 	}
-	public static void main (String[] args)
+   
+   
+   
+	/*public static void main (String[] args)
 	{
 		LinkedListForDeck test = new LinkedListForDeck();
 		test.addToFront(new Card(3, 'h'));
@@ -171,12 +118,14 @@ public class GUI extends JFrame {//implements ActionListener{
 		test.addToFront(new Card(3, 'h'));
 		test.addToFront(new Card(3, 'h'));
 		Card card = new Card(3, 'h');
-		 GUI  gui = new GUI("heresTheFirstCard", 
-				 card, 
-				 "it's Geoff's turn", 
-				 test, 
-				 "What's life all about?");
-	}
-
+		Gui  gui = new Gui("heresTheFirstCard", 
+				               card, 
+				               "  " + "it's Geoff's turn", 
+				               test, 
+				               "What's life all about?");
+      while(!gui.answer()){}
+      int i = inputAnswer;
+      System.out.println(i);
+	}*/
 }
 	
