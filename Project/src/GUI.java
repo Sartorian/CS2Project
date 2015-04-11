@@ -55,7 +55,7 @@ public class GUI extends JFrame implements ActionListener{
 			if (sentence.equals("Sorry. Cant draw twice"))
 			{
 				panel3 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-				passIcon = new ImageIcon("src/Pass.png");
+				passIcon = new ImageIcon("src/Pass.jpg");
 				pass = new JButton(passIcon);
 				pass.addActionListener(this);
 				panel3.add(pass);
