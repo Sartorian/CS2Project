@@ -37,7 +37,7 @@ public class GUI extends JFrame implements ActionListener{
 			panel1.add(deckEdge1);
 		    panel1.add(deckEdge2);
 
-		    statementB = new JLabel(Play.currUser.getPlayerData().getName()+"'s turn");
+		    statementB = new JLabel("  " + Play.currUser.getPlayerData().getName()+"'s turn");
 		    statementB.setFont(new Font("Cambria", Font.PLAIN, 18));
 			panel1.add(statementB);
 			
@@ -75,7 +75,7 @@ public class GUI extends JFrame implements ActionListener{
 			add(panel2, BorderLayout.CENTER);
 			add(panel3, BorderLayout.SOUTH);
 			setTitle("Crazy Eights");
-			setSize(1100, 273);
+			setSize(1100, 325);
 			setLocationRelativeTo(null);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setVisible(true);
@@ -158,7 +158,7 @@ public class GUI extends JFrame implements ActionListener{
 				if (!(Play.skipTurn)){
 					Play.currUser = Play.currUser.getNext();
 					Play.AITurn();
-					update();
+					//update();
 					new GUI("Last played card: ");
 				}
 				else {
@@ -174,6 +174,7 @@ public class GUI extends JFrame implements ActionListener{
 			}
 		}
 	}
+	/*
 	public void update()//updates the GUI using code from constructor to keep display up-to-date with game
 	{
 		//statementA.setText("Last card played:");//gets rid of first turn text
@@ -217,7 +218,7 @@ public class GUI extends JFrame implements ActionListener{
 		}
 
 	}
-
+*/
 	
 	
 	public String cardImageFileName(Card card)  //<-- returns the file name string.

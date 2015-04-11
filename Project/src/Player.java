@@ -50,7 +50,7 @@ public class Player
 			}
 			if(curr == null)//if you went too far
 			{
-				System.out.println("ERROR CODE 2");//index out of bounds error
+				//System.out.println("ERROR CODE 2");//index out of bounds error
 			}
 			else if(curr.getData().canPlay(d.getCards().getFrontData(), eightSuit))//if you can play on the discard pile
 			{
@@ -64,6 +64,7 @@ public class Player
 				else if (curr.getData().getValue().equals("8")){
 					if (ifAI){
 						eightSuit = hand.getFront().getData().getSuit();//an ai will pick the suit from their first card.
+						System.out.println("AI Changed suit to " + eightSuit);//Prints to the console
 					}
 					else {   
 						eightSuit = curr.getData().getSuit(); //add a way for player to input their desired suit here <--- ///******
