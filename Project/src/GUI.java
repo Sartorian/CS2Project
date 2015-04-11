@@ -1,34 +1,27 @@
-//import java.util.Scanner;
+
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
 
-//import java.io.*;
-//import java.util.ArrayList;
-
 public class GUI extends JFrame implements ActionListener{
 
-
-
 	private JPanel panel1, panel2, panel3;
-	private JLabel statement, discardPile, controls;
-	//private JLabel pan2element, pan3element;
+	private JLabel statementA, statementB, statementC, discardPile, controls, deckEdge1, deckEdge2;
 
-	//private JTextField input;
 	private JButton deck;
 	private ImageIcon cardIcon;
 
 	JButton[] userCards;						//<-- the card images array for the user's hand.
-
-	boolean flag = false;
-	public int inputAnswer;
-
-	public GUI ()
+	
+	public GUI (String sentence)
 	{
-		panel1 = new JPanel();          
-		statement = new JLabel("Last played card: ");
-		panel1.add(statement);
+		panel1 = new JPanel();  
+
+		statementA = new JLabel(sentence);
+        statementA.setFont(new Font("Cambria", Font.PLAIN, 72));
+
+		panel1.add(statementA);
 
 		cardIcon = new ImageIcon(cardImageFileName(Play.pile.getCards().getFrontData())); 
 		discardPile = new JLabel(cardIcon);
@@ -36,11 +29,19 @@ public class GUI extends JFrame implements ActionListener{
 		if(Play.currUser == Play.playerOrder.front)
 		{
 			deck = new JButton(new ImageIcon("src/b1fv.png"));//click to draw
+			deck.addActionListener(this);
+			deckEdge1 = new JLabel(new ImageIcon("src/b1pr.png")); 
+			deckEdge2 = new JLabel(new ImageIcon("src/b1pr.png")); 
+			
+			panel1.add(deck);		
+			panel1.add(deckEdge1);
+		    panel1.add(deckEdge2);
 
-			panel1.add(deck);
-
-			panel2 = new JPanel(new GridLayout(1, Play.currUser.getPlayerData().getHand().size() + 1));// <-- the hand of the player 
-			panel2.add(new JLabel(Play.currUser.getPlayerData().getName()+"'s turn"));
+		    statementB = new JLabel(Play.currUser.getPlayerData().getName()+"'s turn");
+		    statementB.setFont(new Font("Cambria", Font.PLAIN, 18));
+			panel1.add(statementB);
+			
+			panel2 = new JPanel(new GridLayout(1, Play.currUser.getPlayerData().getHand().size()));// <-- the hand of the player 
 			userCards = new JButton[Play.currUser.getPlayerData().getHand().size()];
 			for (int i=0; i < Play.currUser.getPlayerData().getHand().size(); i++)
 			{
@@ -49,44 +50,49 @@ public class GUI extends JFrame implements ActionListener{
 				userCards[i].addActionListener(this);
 				panel2.add(userCards[i]);
 			}
-			panel3 = new JPanel();
+			
+			panel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			controls = new JLabel("Click a card to play it or click the deck to draw a card.");
+			controls.setFont(new Font("Cambria", Font.PLAIN, 18));
 			panel3.add(controls);
+			
+			//A very mild clay tone for the information texts:	
+		    panel1.setOpaque(true);
+			panel1.setBackground(new Color(200,155,155));
+			
 			add(panel1, BorderLayout.NORTH);
 			add(panel2, BorderLayout.CENTER);
 			add(panel3, BorderLayout.SOUTH);
 			setTitle("Crazy Eights");
-			setSize(800, 450);
+			setSize(1100, 273);
 			setLocationRelativeTo(null);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setVisible(true);
 		}
 		else
 		{
-			panel3 = new JPanel();
+			panel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			controls = new JLabel("Opponent's turn. Please wait.");
+			controls.setFont(new Font("Cambria", Font.PLAIN, 18));
 			panel3.add(controls);
+			
 			add(panel1, BorderLayout.NORTH);
 			add(panel3, BorderLayout.SOUTH);
 			setTitle("Crazy Eights");
-			setSize(800, 450);
+			setSize(1100, 273);
 			setLocationRelativeTo(null);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setVisible(true);
 			Play.AITurn();
 		}
-		
-
-		
 	}
-
 
 	public void actionPerformed(ActionEvent e)
 	{
 		if(e.getSource().equals(deck))//if they clicked the deck
 		{
 			Play.currUser.getPlayerData().drawCard(Play.gs);//draw a card
-			new GUI();
+			new GUI("Last played card: ");
 		}
 		else
 		{
@@ -100,23 +106,31 @@ public class GUI extends JFrame implements ActionListener{
 			}
 			if(Play.currUser.getPlayerData().playCard(Play.pile, i))//plays the chosen card if possible
 			{
-				update();
-				Play.currUser = Play.currUser.getNext();
-				update();
-				new GUI();
+				//update();
+            if (!(Play.skipTurn)){
+				   Play.currUser = Play.currUser.getNext();
+				   update();
+				   new GUI("Last played card: ");
+               }
+            else {
+               Play.skipTurn = false;
+               }            
 			}
 			else
 			{
-				new GUI();
+				new GUI("Last played card: ");
 				return;
 			}
 		}
 	}
 	public void update()//updates the GUI using code from constructor to keep display up-to-date with game
 	{
-		statement.setText("Last card played:");//gets rid of first turn text
+		//statementA.setText("Last card played:");//gets rid of first turn text
 		panel1.remove(discardPile);
 		panel1.remove(deck);
+		panel1.remove(deckEdge1);
+		panel1.remove(deckEdge2);
+		panel1.remove(statementB);
 		for(int i = 0; i < userCards.length; i++)//clear old hand display
 		{
 			panel2.remove(userCards[i]);
@@ -127,6 +141,12 @@ public class GUI extends JFrame implements ActionListener{
 			discardPile = new JLabel(cardIcon);
 			panel1.add(discardPile);
 			panel1.add(deck);
+			panel1.add(deckEdge1);
+			panel1.add(deckEdge2);
+			
+			statementB = new JLabel(Play.currUser.getPlayerData().getName()+"'s turn");
+		    statementB.setFont(new Font("Cambria", Font.PLAIN, 18));
+			panel1.add(statementB);
 
 			for (int i=0; i < Play.currUser.getPlayerData().getHand().size(); i++)//show new hand display
 			{
@@ -147,6 +167,29 @@ public class GUI extends JFrame implements ActionListener{
 
 	}
 
+	public void wonOrLost(String sentence)
+	{
+		panel1 = new JPanel();  
+
+		statementA = new JLabel(sentence);
+        statementA.setFont(new Font("Cambria", Font.PLAIN, 72));
+
+		panel1.add(statementA);
+
+		cardIcon = new ImageIcon(cardImageFileName(Play.pile.getCards().getFrontData())); 
+		discardPile = new JLabel(cardIcon);
+		panel1.add(discardPile);
+
+		add(panel1, BorderLayout.NORTH);
+		add(panel2, BorderLayout.CENTER);
+		add(panel3, BorderLayout.SOUTH);
+		setTitle("Crazy Eights");
+		setSize(1100, 273);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
 	public String cardImageFileName(Card card)  //<-- returns the file name string.
 	{	
 		char suit = card.getSuitChar();
@@ -163,7 +206,7 @@ public class GUI extends JFrame implements ActionListener{
 				{"Blank","2","50","46","42","38","34","30","26","22","18","14","10","6"},
 				{"Blank","3","51","47","43","39","35","31","27","23","19","15","11","7"},
 				{"Blank","4","52","48","44","40","36","32","28","24","20","16","12","8"}};
-		return "src/" + images[suitIndex][value] + ".png";
+		return images[suitIndex][value] + ".png";
 	}
 }
 
