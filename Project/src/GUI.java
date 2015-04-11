@@ -94,7 +94,7 @@ public class GUI extends JFrame implements ActionListener{
 			}
 		}
 	}
-	public void update()
+	public void update()//updates the GUI using code from constructor to keep display up-to-date with game
 	{
 		statement.setText("Last card played:");//gets rid of first turn text
 		panel1.remove(discardPile);
@@ -121,6 +121,9 @@ public class GUI extends JFrame implements ActionListener{
 		}
 		else
 		{
+			cardIcon = new ImageIcon(cardImageFileName(Play.pile.getCards().getFrontData())); 
+			discardPile = new JLabel(cardIcon);
+			panel1.add(discardPile);
 			controls.setText("Opponent's turn. Please wait.");
 		}
 
