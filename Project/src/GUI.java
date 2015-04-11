@@ -135,8 +135,10 @@ public class GUI extends JFrame implements ActionListener{
 		}
 		else if (e.getSource().equals(pass))
 		{
+			Play.currUser.getPlayerData().canDraw(true);
 			Play.currUser = Play.currUser.getNext();
 			new GUI("Last played card: ");
+			Play.AITurn();
 		}
 		else
 		{
@@ -145,31 +147,30 @@ public class GUI extends JFrame implements ActionListener{
 			{
 				i++;
 			}
+
 			if(Play.currUser.getPlayerData().playCard(Play.pile, i))//plays the chosen card if possible
 			{
-				//update();
-				if(Play.currUser.getPlayerData().playCard(Play.pile, i))//plays the chosen card if possible
+				if(Play.currUser.getPlayerData().getHand().size() == 0)
 				{
-					if(Play.currUser.getPlayerData().getHand().size() == 0)
-					{
-						new GUI(true, Play.currUser.getPlayerData().getName() + " Won!");
-						return;
-					}
-					if (!(Play.skipTurn)){
-						Play.currUser = Play.currUser.getNext();
-						update();
-						new GUI("Last played card: ");
-					}
-					else {
-						Play.skipTurn = false;
-						new GUI("Last played card: ");
-					}            
-				}
-				else
-				{
-					new GUI("Last played card: ");
+					new GUI(true, Play.currUser.getPlayerData().getName() + " Won!");
 					return;
 				}
+				if (!(Play.skipTurn)){
+					Play.currUser = Play.currUser.getNext();
+					Play.AITurn();
+					update();
+					new GUI("Last played card: ");
+				}
+				else {
+					Play.skipTurn = false;
+					new GUI("Last played card: ");
+				}            
+			}
+			else
+			{
+				new GUI("Last played card: ");
+				return;
+
 			}
 		}
 	}

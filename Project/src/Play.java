@@ -76,6 +76,11 @@ public class Play
 	{
 		if (currUser == playerOrder.end)//if it is the AI's turn, we automate it.
 		{
+			if(currUser.getPlayerData().getHand().size() == 0)
+			{
+				new GUI(true, "AI WINS!");
+				return;
+			}
 			int i = 0;
 			while(!currUser.getPlayerData().playCard(pile, i) && i < currUser.getPlayerData().getHand().size())//runs through entire hand until it can play a card
 			{
@@ -84,13 +89,15 @@ public class Play
 			if(i == currUser.getPlayerData().getHand().size())//if it could not play a card, it will draw
 			{
 				currUser.getPlayerData().drawCard(gs);
-				currUser.getPlayerData().playCard(pile, 0);//when you draw, the card is always added to the first index of the hand
+				if(!currUser.getPlayerData().playCard(pile, 0))//when you draw, the card is always added to the first index of the hand
+					System.out.println("AI Passed");
 			}
          if (!skipTurn){
 			   currUser = playerOrder.front;
             }
          else {
             skipTurn = false;
+            AITurn();
             }
 			gui = new GUI("Your computer played: ");
 		}
