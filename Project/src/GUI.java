@@ -96,7 +96,7 @@ public class GUI extends JFrame {//implements ActionListener{
 	public void aiTurn(Card card, String newComment) 
 	{ 
 		makePanel1("", card);
-		makePanel2(newComment);
+		//makePanel2(newComment);
 		
 		String filename = cardImageFileName(card);			
 		img.setIcon(new ImageIcon(filename));
