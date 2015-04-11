@@ -153,6 +153,7 @@ public class GUI extends JFrame implements ActionListener{
 					if(Play.currUser.getPlayerData().getHand().size() == 0)
 					{
 						new GUI(true, Play.currUser.getPlayerData().getName() + " Won!");
+						return;
 					}
 					if (!(Play.skipTurn)){
 						Play.currUser = Play.currUser.getNext();
