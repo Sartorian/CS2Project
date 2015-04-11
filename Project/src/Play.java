@@ -30,8 +30,7 @@ public class Play
 		System.out.println("First Card: " + pile.getCards().getFrontData());
 		String comment = "First card: "; //<-- this once-only statement can become "" after the first turn.
 		//GUI SUBSTITUTE:
-		Gui gui = new Gui();
-		gui.makeGui(comment,
+		GUI gui = new GUI(comment,
 				pile.getCards().getFrontData(), 
 				user.getName()+"'s turn", 
 				user.getHand(),
