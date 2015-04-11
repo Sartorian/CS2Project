@@ -41,7 +41,7 @@ public class LinkedListForDeck
 		if (front==null){
          System.out.println("Deck is Empty");
 			return null;
-         }
+        }
 		else
 			return front.getData();
 	}
@@ -118,7 +118,6 @@ public class LinkedListForDeck
 			System.out.println("Can't add. Index out of bounds");
 		else
 		{
-	
 			if (index==0)
 				addToFront(d);
 			else

@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Play
 {
 	public static UsedPile pile;
+	
 	public static void main(String[] args)
 	{
 		
@@ -27,22 +28,39 @@ public class Play
 		pile = new UsedPile(deck);
 		pile.revealTop();
 		System.out.println("First Card: " + pile.getCards().getFrontData());
-
-		//
+		String comment = "First card: "; //<-- this once-only statement can become "" after the first turn.
 		while(userWin == false || aiWin == false)
 		{
-			System.out.println(user.getName()+"'s turn");
-			System.out.println(user.getHand());
-			System.out.println("Please choose the position of your card");
-			int i = kb.nextInt();
+			//System.out.println(user.getName()+"'s turn");			
+			//System.out.println(user.getHand());
+			//System.out.println("Please choose the position of your card");
+			//GUI SUBSTITUTE:
+			GUI gui = new GUI(comment,
+								pile.getCards().getFrontData(), 
+								user.getName()+"'s turn", 
+								user.getHand(),
+								"Please choose the position of your card");
+			
+			comment = null; 				//<-- so we don't have a reoccurring "First card. "
+				
+			//int i = kb.nextInt();
+			//GUI SUBSTITUTE:
+			while(!gui.answer()){}
+			int i = gui.inputAnswer;
 			if(!user.playCard(pile, i))
 			{
-				i = kb.nextInt();
+				//i = kb.nextInt();
+				//GUI SUBSTITUTE:
+				while(!gui.answer()){}
+				i = gui.inputAnswer;
 				user.playCard(pile, i);
 			}
+			
 			System.out.println(pile.getCards().getFront());//displays top card of discard pile
-
 			System.out.println(ai.getName()+"'s turn");  
+			//GUI SUBSTITUTE :
+			gui.aiTurn(pile.getCards().getFront().getData(), 
+						ai.getName()+"'s turn" );	
 			int j = 0;
 			while(!ai.playCard(pile, j) && j < ai.getHand().size())
 			{
@@ -63,7 +81,11 @@ public class Play
 		kb.close();
 		if(userWin)
 			System.out.println(user.getName()+" wins!!!");
+			//GUI SUBSTITUTE:
+			//gui.wonOrLost(user.getName()+" wins!!!");
 		else if(aiWin)
 			System.out.println(ai.getName()+"wins!!!"); 
+			//GUI SUBSTITUTE
+			//gui.wonOrLost(ai.getName()+" wins!!!");
 	}
 }

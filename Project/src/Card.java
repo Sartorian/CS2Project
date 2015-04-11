@@ -2,6 +2,8 @@ public class Card
 {
 	private String value;
 	private String suit;
+	private int valueNum; //<-- necessary to preserve the constructor parameters passed, to find a card image in GUI class 2D array.
+	private char suitChar;
 	
 	public Card(int i, char c)
 	{
@@ -15,8 +17,9 @@ public class Card
 		else if(c == 's')
 			suit = Reference.SPADE;
 		else
-			suit = "ERROR CODE 1";
-		
+			suit = "ERROR CODE 1";		
+		valueNum = i;
+		suitChar = c;
 	}
 	public String getSuit()
 	{
@@ -26,7 +29,19 @@ public class Card
 	{
 		return value;
 	}
+//<<<<<<< Updated upstream
 	public boolean canPlay(Card c, String eightSuit)
+=======
+	public int getValueNum()
+	{
+		return valueNum;
+	}
+	public char getSuitChar()
+	{
+		return suitChar;
+	}
+	public boolean canPlay(Card c)
+>>>>>>> Stashed changes
 	{
       if (c.value.equals("8")){
          if (this.value.equals(eightSuit)){
@@ -53,7 +68,7 @@ public class Card
 	
 	public String toString()//Prints full card name
 	{
-		return value + suit;
+		return value + " " + suit;
 	}
 	//END CARD CLASS
 }
