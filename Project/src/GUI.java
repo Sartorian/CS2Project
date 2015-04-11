@@ -85,12 +85,8 @@ public class GUI extends JFrame implements ActionListener{
 	{
 		if(e.getSource().equals(deck))//if they clicked the deck
 		{
-			if(Play.currUser.getPlayerData().canDraw())//if they did not yet draw
-			{
-				Play.currUser.getPlayerData().drawCard(Play.gs);//draw a card
-				new GUI();
-			}
-			else return;
+			Play.currUser.getPlayerData().drawCard(Play.gs);//draw a card
+			new GUI();
 		}
 		else
 		{
@@ -111,6 +107,7 @@ public class GUI extends JFrame implements ActionListener{
 			}
 			else
 			{
+				new GUI();
 				return;
 			}
 		}
