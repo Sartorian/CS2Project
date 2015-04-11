@@ -29,9 +29,7 @@ public class Card
 	{
 		return value;
 	}
-//<<<<<<< Updated upstream
-	public boolean canPlay(Card c, String eightSuit)
-=======
+
 	public int getValueNum()
 	{
 		return valueNum;
@@ -40,8 +38,7 @@ public class Card
 	{
 		return suitChar;
 	}
-	public boolean canPlay(Card c)
->>>>>>> Stashed changes
+	public boolean canPlay(Card c, String eightSuit)
 	{
       if (c.value.equals("8")){
          if (this.value.equals(eightSuit)){
