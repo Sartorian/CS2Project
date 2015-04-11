@@ -60,7 +60,7 @@ public class Player
 						eightSuit = hand.getFront().getData().getSuit();//an ai will pick the suit from their first card.
 					}
 					else {   
-						//eightSuit =                               //add a way for player to input their desired suit here <--- ///******
+						eightSuit = curr.getData().getSuit(); //add a way for player to input their desired suit here <--- ///******
 					}
 				}
 				else if (curr.getData().getValue().equals("J")){

@@ -88,7 +88,7 @@ public class GUI extends JFrame implements ActionListener{
 			if(Play.currUser.getPlayerData().canDraw())//if they did not yet draw
 			{
 				Play.currUser.getPlayerData().drawCard(Play.gs);//draw a card
-				update();
+				new GUI();
 			}
 			else return;
 		}
