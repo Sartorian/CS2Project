@@ -9,8 +9,8 @@ public class GUI extends JFrame implements ActionListener{
 	private JPanel panel1, panel2, panel3;
 	private JLabel statementA, statementB, statementC, discardPile, controls, deckEdge1, deckEdge2;
 
-	private JButton deck;
-	private ImageIcon cardIcon;
+	private JButton deck, pass;
+	private ImageIcon cardIcon, passIcon;
 
 	JButton[] userCards;						//<-- the card images array for the user's hand.
 	
@@ -52,9 +52,20 @@ public class GUI extends JFrame implements ActionListener{
 			}
 			
 			panel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			controls = new JLabel("Click a card to play it or click the deck to draw a card.");
-			controls.setFont(new Font("Cambria", Font.PLAIN, 18));
-			panel3.add(controls);
+			if (sentence.equals("Sorry. Cant draw twice"))
+			{
+				panel3 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+				passIcon = new ImageIcon("src/Pass.png");
+				pass = new JButton(passIcon);
+				pass.addActionListener(this);
+				panel3.add(pass);
+			}
+			else
+			{
+				controls = new JLabel("Click a card to play it or click the deck to draw a card.");
+				controls.setFont(new Font("Cambria", Font.PLAIN, 18));
+				panel3.add(controls);
+			}
 			
 			//A very mild clay tone for the information texts:	
 		    panel1.setOpaque(true);
@@ -86,40 +97,78 @@ public class GUI extends JFrame implements ActionListener{
 			Play.AITurn();
 		}
 	}
+	public GUI(boolean b, String victory)//creates a new GUI at game end
+	{
+		panel1 = new JPanel();  
+
+		statementA = new JLabel(victory);
+        statementA.setFont(new Font("Cambria", Font.PLAIN, 72));
+
+		panel1.add(statementA);
+
+		/*cardIcon = new ImageIcon(cardImageFileName(Play.pile.getCards().getFrontData())); 
+		discardPile = new JLabel(cardIcon);
+		panel1.add(discardPile);*/
+
+		add(panel1, BorderLayout.NORTH);
+		//add(panel2, BorderLayout.CENTER);
+		//add(panel3, BorderLayout.SOUTH);
+		setTitle("Crazy Eights");
+		setSize(1100, 273);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
 
 	public void actionPerformed(ActionEvent e)
 	{
 		if(e.getSource().equals(deck))//if they clicked the deck
 		{
-			Play.currUser.getPlayerData().drawCard(Play.gs);//draw a card
+
+			if (Play.currUser.getPlayerData().canDraw())
+			{
+				Play.currUser.getPlayerData().drawCard(Play.gs);//draw a card
+				new GUI("Last played card: ");			
+			}
+			else
+				new GUI("Sorry. Cant draw twice");
+		}
+		else if (e.getSource().equals(pass))
+		{
+			Play.currUser = Play.currUser.getNext();
 			new GUI("Last played card: ");
 		}
 		else
 		{
-			int i;
-			for(i = 0; i < userCards.length; i++)//loops through userCards to find what triggered the event
+			int i = 0;
+			while (i < userCards.length && userCards[i]!=e.getSource())//loops through userCards to find what triggered the event
 			{
-				if(userCards[i]==e.getSource())//when found
-				{
-					break;//end loop
-				}
+				i++;
 			}
 			if(Play.currUser.getPlayerData().playCard(Play.pile, i))//plays the chosen card if possible
 			{
 				//update();
-            if (!(Play.skipTurn)){
-				   Play.currUser = Play.currUser.getNext();
-				   update();
-				   new GUI("Last played card: ");
-               }
-            else {
-               Play.skipTurn = false;
-               }            
-			}
-			else
-			{
-				new GUI("Last played card: ");
-				return;
+				if(Play.currUser.getPlayerData().playCard(Play.pile, i))//plays the chosen card if possible
+				{
+					if(Play.currUser.getPlayerData().getHand().size() == 0)
+					{
+						new GUI(true, Play.currUser.getPlayerData().getName() + " Won!");
+					}
+					if (!(Play.skipTurn)){
+						Play.currUser = Play.currUser.getNext();
+						update();
+						new GUI("Last played card: ");
+					}
+					else {
+						Play.skipTurn = false;
+						new GUI("Last played card: ");
+					}            
+				}
+				else
+				{
+					new GUI("Last played card: ");
+					return;
+				}
 			}
 		}
 	}
@@ -167,28 +216,7 @@ public class GUI extends JFrame implements ActionListener{
 
 	}
 
-	public void wonOrLost(String sentence)
-	{
-		panel1 = new JPanel();  
-
-		statementA = new JLabel(sentence);
-        statementA.setFont(new Font("Cambria", Font.PLAIN, 72));
-
-		panel1.add(statementA);
-
-		cardIcon = new ImageIcon(cardImageFileName(Play.pile.getCards().getFrontData())); 
-		discardPile = new JLabel(cardIcon);
-		panel1.add(discardPile);
-
-		add(panel1, BorderLayout.NORTH);
-		add(panel2, BorderLayout.CENTER);
-		add(panel3, BorderLayout.SOUTH);
-		setTitle("Crazy Eights");
-		setSize(1100, 273);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
-	}
+	
 	
 	public String cardImageFileName(Card card)  //<-- returns the file name string.
 	{	
@@ -206,7 +234,7 @@ public class GUI extends JFrame implements ActionListener{
 				{"Blank","2","50","46","42","38","34","30","26","22","18","14","10","6"},
 				{"Blank","3","51","47","43","39","35","31","27","23","19","15","11","7"},
 				{"Blank","4","52","48","44","40","36","32","28","24","20","16","12","8"}};
-		return images[suitIndex][value] + ".png";
+		return "src/" + images[suitIndex][value] + ".png";
 	}
 }
 

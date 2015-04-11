@@ -40,7 +40,7 @@ public class Card
 	public boolean canPlay(Card c, String eightSuit)
 	{
       if (c.value.equals("8")){
-         if (this.suit.equals(eightSuit)){
+         if (this.suit.equals(eightSuit) || this.value.equals("8")){
             return true;
             }
          else {

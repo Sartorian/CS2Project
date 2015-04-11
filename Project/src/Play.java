@@ -18,8 +18,8 @@ public class Play
 		String playerName = "Player";
       skipTurn = false;
 
-		boolean userWin = false;
-		boolean aiWin = false;
+		//boolean userWin = false;
+		//boolean aiWin = false;
 
 		Player user = new Player(playerName, false);//not ai
 		Player ai = new Player("AI", true);//ai
@@ -36,7 +36,7 @@ public class Play
 		//System.out.println("Last played card: " + pile.getCards().getFrontData());
 
 		gui = new GUI("Here's the first card: "); //the first 
-		
+		/*
 		while(!userWin && !aiWin)//if win conditions are not met
 		{
 			if (currUser.getPlayerData() == ai)//if it is the AI's turn, we automate it.
@@ -59,9 +59,9 @@ public class Play
                }
 				gui = new GUI("Your computer played: ");
 			}
-		}
+		}*/
 		kb.close();
-		if(userWin)
+		/*if(userWin)
 		{
 			System.out.println(user.getName()+" wins!!!");
 			gui.wonOrLost(user.getName()+" wins!!!");
@@ -70,7 +70,7 @@ public class Play
 		{
 			System.out.println(ai.getName()+"wins!!!"); 
 			gui.wonOrLost(ai.getName()+" wins!!!");
-		}
+		}*/
 	}
 	public static void AITurn()
 	{

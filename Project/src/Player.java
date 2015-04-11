@@ -37,7 +37,7 @@ public class Player
 	{
 		NodeForDeck curr = hand.getFront();
 		int j = 0;
-      boolean draw2 = false;
+		boolean draw2 = false;
 
 		if(hand.size() == 0)
 			return false;
@@ -55,7 +55,11 @@ public class Player
 			else if(curr.getData().canPlay(d.getCards().getFrontData(), eightSuit))//if you can play on the discard pile
 			{
 				if (curr.getData().getValue().equals("2")){
-               draw2 = true;
+					for(int count = 0; count < 2; count++)
+					{
+						Play.currUser.getNext().getPlayerData().drawCard(Play.gs);
+						Play.currUser.getNext().getPlayerData().canDraw(true);
+					}
 				}   
 				else if (curr.getData().getValue().equals("8")){
 					if (ifAI){
@@ -66,17 +70,17 @@ public class Player
 					}
 				}
 				else if (curr.getData().getValue().equals("J")){
-            Play.skipTurn = true;
+					Play.skipTurn = true;
 				}
 				d.getCards().addToFront(curr.getData());//place a copy of the card on top of the discard pile
 				hand.remove(i);//delete copy from hand
 				canDraw = true;
-            if (draw2){
-               canDraw = true;
-               Play.currUser.getNext().getPlayerData().drawCard(Play.gs);
-               canDraw = true;
-               Play.currUser.getNext().getPlayerData().drawCard(Play.gs);
-               }
+				if (draw2){
+					canDraw = true;
+					Play.currUser.getNext().getPlayerData().drawCard(Play.gs);
+					canDraw = true;
+					Play.currUser.getNext().getPlayerData().drawCard(Play.gs);
+				}
 				return true;//success. A winner is you.
 			}
 		}
