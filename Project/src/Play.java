@@ -30,7 +30,7 @@ public class Play
 		pile = new UsedPile(deck);
 		pile.revealTop();
 		gs.deal();
-		System.out.println("First Card: " + pile.getCards().getFrontData());
+		System.out.println("Last played card: " + pile.getCards().getFrontData());
 		//GUI SUBSTITUTE:
 		gui = new GUI();
 		while(!userWin && !aiWin)//if win conditions are not met
@@ -48,12 +48,7 @@ public class Play
 					ai.playCard(pile, 0);//when you draw, the card is always added to the first index of the hand
 				}
 				currUser = playerOrder.front;
-				gui.update();
-			}
-			else
-			{
-				//gui.update();
-				//Thread.sleep(100);
+				gui = new GUI();
 			}
 		}
 		kb.close();
@@ -65,5 +60,23 @@ public class Play
 			System.out.println(ai.getName()+"wins!!!"); 
 		//GUI SUBSTITUTE
 		//gui.wonOrLost(ai.getName()+" wins!!!");
+	}
+	public static void AITurn()
+	{
+		if (currUser == playerOrder.end)//if it is the AI's turn, we automate it.
+		{
+			int i = 0;
+			while(!currUser.getPlayerData().playCard(pile, i) && i < currUser.getPlayerData().getHand().size())//runs through entire hand until it can play a card
+			{
+				i++;
+			}
+			if(i == currUser.getPlayerData().getHand().size())//if it could not play a card, it will draw
+			{
+				currUser.getPlayerData().drawCard(gs);
+				currUser.getPlayerData().playCard(pile, 0);//when you draw, the card is always added to the first index of the hand
+			}
+			currUser = playerOrder.front;
+			gui = new GUI();
+		}
 	}
 }

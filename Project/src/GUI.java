@@ -27,37 +27,57 @@ public class GUI extends JFrame implements ActionListener{
 	public GUI ()
 	{
 		panel1 = new JPanel();          
-		statement = new JLabel("Here's the first card: ");
-		deck = new JButton(new ImageIcon("src/b1fv.png"));//click to draw
+		statement = new JLabel("Last played card: ");
 		panel1.add(statement);
 
 		cardIcon = new ImageIcon(cardImageFileName(Play.pile.getCards().getFrontData())); 
 		discardPile = new JLabel(cardIcon);
 		panel1.add(discardPile);
-		panel1.add(deck);
-
-		panel2 = new JPanel(new GridLayout(1, Play.currUser.getPlayerData().getHand().size() + 1));// <-- the hand of the player 
-		panel2.add(new JLabel(Play.currUser.getPlayerData().getName()+"'s turn"));
-		userCards = new JButton[Play.currUser.getPlayerData().getHand().size()];
-		for (int i=0; i < Play.currUser.getPlayerData().getHand().size(); i++)
+		if(Play.currUser == Play.playerOrder.front)
 		{
-			String filename = cardImageFileName(Play.currUser.getPlayerData().getHand().get(i));//<-- the card's equivalent images' file name is used (i.e."1.png")	
-			userCards[i] = new JButton(new ImageIcon(filename));
-			userCards[i].addActionListener(this);
-			panel2.add(userCards[i]);
-		}
-		panel3 = new JPanel();
-		controls = new JLabel("Click a card to play it or click the deck to draw a card.");
-		panel3.add(controls);
-		add(panel1, BorderLayout.NORTH);
-		add(panel2, BorderLayout.CENTER);
-		add(panel3, BorderLayout.SOUTH);
+			deck = new JButton(new ImageIcon("src/b1fv.png"));//click to draw
 
-		setTitle("Crazy Eights");
-		setSize(800, 450);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
+			panel1.add(deck);
+
+			panel2 = new JPanel(new GridLayout(1, Play.currUser.getPlayerData().getHand().size() + 1));// <-- the hand of the player 
+			panel2.add(new JLabel(Play.currUser.getPlayerData().getName()+"'s turn"));
+			userCards = new JButton[Play.currUser.getPlayerData().getHand().size()];
+			for (int i=0; i < Play.currUser.getPlayerData().getHand().size(); i++)
+			{
+				String filename = cardImageFileName(Play.currUser.getPlayerData().getHand().get(i));//<-- the card's equivalent images' file name is used (i.e."1.png")	
+				userCards[i] = new JButton(new ImageIcon(filename));
+				userCards[i].addActionListener(this);
+				panel2.add(userCards[i]);
+			}
+			panel3 = new JPanel();
+			controls = new JLabel("Click a card to play it or click the deck to draw a card.");
+			panel3.add(controls);
+			add(panel1, BorderLayout.NORTH);
+			add(panel2, BorderLayout.CENTER);
+			add(panel3, BorderLayout.SOUTH);
+			setTitle("Crazy Eights");
+			setSize(800, 450);
+			setLocationRelativeTo(null);
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setVisible(true);
+		}
+		else
+		{
+			panel3 = new JPanel();
+			controls = new JLabel("Opponent's turn. Please wait.");
+			panel3.add(controls);
+			add(panel1, BorderLayout.NORTH);
+			add(panel3, BorderLayout.SOUTH);
+			setTitle("Crazy Eights");
+			setSize(800, 450);
+			setLocationRelativeTo(null);
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setVisible(true);
+			Play.AITurn();
+		}
+		
+
+		
 	}
 
 
@@ -87,6 +107,7 @@ public class GUI extends JFrame implements ActionListener{
 				update();
 				Play.currUser = Play.currUser.getNext();
 				update();
+				new GUI();
 			}
 			else
 			{
