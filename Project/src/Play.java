@@ -30,7 +30,8 @@ public class Play
 		System.out.println("First Card: " + pile.getCards().getFrontData());
 		String comment = "First card: "; //<-- this once-only statement can become "" after the first turn.
 		//GUI SUBSTITUTE:
-		GUI gui = new GUI(comment,
+		GUI gui = new GUI();
+		gui.makeGUI(comment,
 				pile.getCards().getFrontData(), 
 				user.getName()+"'s turn", 
 				user.getHand(),
@@ -61,7 +62,7 @@ public class Play
 			System.out.println(pile.getCards().getFront());//displays top card of discard pile
 			System.out.println(ai.getName()+"'s turn");  
 			//GUI SUBSTITUTE :
-			gui.makeGui(ai.getName()+"'s turn", 
+			gui.makeGUI(ai.getName()+"'s turn", 
 						pile.getCards().getFrontData(),    //displays top card of discard pile
 						"",
 						user.getHand(), "");		       // I think the user's hand can remain in view, while the
@@ -82,7 +83,7 @@ public class Play
 			else if(ai.getHand().size() == 0)
 				aiWin = true;
 			else
-				gui.makeGui(user.getName()+"'s turn",
+				gui.makeGUI(user.getName()+"'s turn",
 						pile.getCards().getFrontData(), 
 						comment, 
 						user.getHand(),
