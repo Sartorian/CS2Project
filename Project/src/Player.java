@@ -3,15 +3,15 @@ public class Player
 {
 	private LinkedListForDeck hand;
 	private String name;
-   private static String eightSuit = "";//will help with the eight card being played and selecting a suit
+	public static String eightSuit = "";//will help with the eight card being played and selecting a suit
 	private boolean ifAI;
-   
+
 	public Player(String n, boolean AI)
 	{
 		hand = new LinkedListForDeck();
 		name = n;
-      ifAI = AI;//allows to check for the player being AI or not
-      
+		ifAI = AI;//allows to check for the player being AI or not
+
 	}
 	public void drawCard(GameSetup d)
 	{
@@ -26,12 +26,12 @@ public class Player
 			d.getDeck().removeFront();
 		}
 	}
-	
+
 	public boolean playCard(UsedPile d, int i)
 	{
 		NodeForDeck curr = hand.getFront();
 		int j = 0;
-		
+
 		if(hand.size() == 0)
 			return false;
 		else
@@ -47,18 +47,18 @@ public class Player
 			}
 			else if(curr.getData().canPlay(d.getCards().getFrontData(), eightSuit))//if you can play on the discard pile
 			{
-            if (curr.getData().getValue().equals("2")){
-            }   
-            else if (curr.getData().getValue().equals("8")){
-               if (ifAI){
-                  eightSuit = hand.getFront().getData().getSuit();//an ai will pick the suit from their first card.
-                  }
-               else {   
-               //eightSuit =                               //add a way for player to input their desired suit here <--- ///******
-               }
-            }
-            else if (curr.getData().getValue().equals("J")){
-            }
+				if (curr.getData().getValue().equals("2")){
+				}   
+				else if (curr.getData().getValue().equals("8")){
+					if (ifAI){
+						eightSuit = hand.getFront().getData().getSuit();//an ai will pick the suit from their first card.
+					}
+					else {   
+						//eightSuit =                               //add a way for player to input their desired suit here <--- ///******
+					}
+				}
+				else if (curr.getData().getValue().equals("J")){
+				}
 				d.getCards().addToFront(curr.getData());//place a copy of the card on top of the discard pile
 				hand.remove(i);//delete copy from hand
 				return true;//success. A winner is you.
