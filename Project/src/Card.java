@@ -29,6 +29,10 @@ public class Card
 	{
 		return value;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 	public int getValueNum()
 	{
 		return valueNum;
@@ -37,12 +41,16 @@ public class Card
 	{
 		return suitChar;
 	}
+<<<<<<< HEAD
 
 	public boolean canPlay(Card c, String eightSuit)
 =======
 
 	public boolean canPlay(Card c)
 >>>>>>> Stashed changes
+=======
+	public boolean canPlay(Card c, String eightSuit)
+>>>>>>> origin/master
 	{
       if (c.value.equals("8")){
          if (this.value.equals(eightSuit)){
