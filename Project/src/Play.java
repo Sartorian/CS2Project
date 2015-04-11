@@ -19,9 +19,9 @@ public class Play
 		
 		Player user = new Player(playerName, false);//not ai
 		Player ai = new Player("Nicolas Cage", true);//ai
-		circleLinkedList playerOrder = new circleLinkedList(); // you mean Circular or someting cannot see cşrcle linkedlist?
-		playerOrder.addToEnd(user);
-		playerOrder.addToEnd(ai);
+      circleLinkedList playerOrder = new circleLinkedList();
+      playerOrder.addToEnd(user);
+      playerOrder.addToEnd(ai);
 		
 		//Should create the pile of played cards
 		LinkedListForDeck deck = gs.getDeck();
@@ -88,4 +88,4 @@ public class Play
 			//GUI SUBSTITUTE
 			//gui.wonOrLost(ai.getName()+" wins!!!");
 	}
-} 
+}

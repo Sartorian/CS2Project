@@ -1,8 +1,9 @@
+
 public class Player
 {
 	private LinkedListForDeck hand;
 	private String name;
-    private static String eightSuit = "";//will help with the eight card being played and selecting a suit
+   private static String eightSuit = "";//will help with the eight card being played and selecting a suit
 	private boolean ifAI;
    
 	public Player(String n, boolean AI)
@@ -40,11 +41,10 @@ public class Player
 				curr = curr.getNext();
 				j++;
 			}
-			if(curr == null) //if you went too far
+			if(curr == null)//if you went too far
 			{
-				System.out.println("ERROR CODE 2"); //index out of bounds error
+				System.out.println("ERROR CODE 2");//index out of bounds error
 			}
-
 			else if(curr.getData().canPlay(d.getCards().getFrontData(), eightSuit))//if you can play on the discard pile
 			{
             if (curr.getData().getValue().equals("2")){
@@ -75,80 +75,3 @@ public class Player
 		return name;
 	}
 }
-
-public class Player 
-{
-	private String name;
-	private CircularLinkedList hand;
-	
-	public Player(String name, CircularLinkedList hand)
-	{
-		this.name = name;
-		this.hand = hand;
-	}
-	
-	public void setName(String name2)
-	{
-		this.name = name2;
-	}
-
-	public void setHand(CircularLinkedList hand2)
-	{
-		this.hand = hand2;
-	}
-	
-	public String getName()
-	{
-		return this.name;
-	}
-	
-	public CircularLinkedList getHand()
-	{
-		return this.hand;
-	}
-	
-	public void drawCard(CircularLinkedList d)
-	{
-		if(d.size() == 0)
-		{
-			d.replenish();//or whatever we call the method to refill the deck from the discard pile
-		}
-		else
-		{
-			
-		}
-	}
-	
-	public boolean playCard(CircularLinkedList d, int i)
-	{
-		NodeForDeck curr = hand.getFront();
-		int j = 0;
-		
-		if(hand.size() == 0)
-		{	
-			return false;
-		}
-		
-		else
-		{
-			while(curr!=null && j < i)
-			{
-				curr = curr.getNext();
-				j++;
-			}
-			if(curr == null)//if you went too far
-			{
-				System.out.println("ERROR CODE 2");//index out of bounds error
-			}
-			else if(curr.getData().canPlay(d.getFront().getData()))//if you can play on the discard pile
-			{
-				d.addToFront(curr.getData());//place a copy of the card on top of the discard pile
-				hand.remove(i);//delete copy from hand
-				
-				return true;//success. A winner is you.
-			}
-		}
-		
-		return false;
-	} 
-} 

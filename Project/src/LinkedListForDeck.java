@@ -27,11 +27,12 @@ public class LinkedListForDeck
 		return count;
 	}
 	
+	
 	//clear the list
 	public void clear()
 	{
 		front = null;
-		count = 0;
+		count=0;
 	}
 	
 	//get the content of the first node
@@ -51,20 +52,24 @@ public class LinkedListForDeck
 		return front;
 	}
 	
+	
+	
 	//remove front node
 	public void removeFront()
 	{
-		if (front == null)
+		if (front==null)
 		{
 			System.out.println("Empty list");
 		}
-		
 		else
 		{
 			front = front.getNext();
 			count--;
 		}
 	}
+	
+	
+
 	
 	//add a node to the end
 	public void addToEnd(Card c)
@@ -102,7 +107,9 @@ public class LinkedListForDeck
 			curr.setNext(null);
 			count--;
 		}
+			
 	}
+
 	
 	//add a node at a given index
 	public void add(int index, Card d)
@@ -143,7 +150,6 @@ public class LinkedListForDeck
 			count--;
 		}
 	}
-	
 	public void shuffleDeck()
 	{
 		LinkedListForDeck d = new LinkedListForDeck();
@@ -175,12 +181,11 @@ public class LinkedListForDeck
 			curr = null;
 		}
 	}
-	
 	//get a node data given an index
 	public Card get(int index)
 	{
 		NodeForDeck curr = front;
-		int i = 0;
+		int i=0;
 		while (curr!=null && i!=index)
 		{
 			curr=curr.getNext();
@@ -193,7 +198,6 @@ public class LinkedListForDeck
 		else
 			return(curr.getData());
 	}
-	
 	public NodeForDeck getNode(int index)
 	{
 		NodeForDeck curr = front;
@@ -203,35 +207,29 @@ public class LinkedListForDeck
 			curr = curr.getNext();
 			i++;
 		}
-		
 		if(curr == null)
 		{
 			System.out.println("ERROR CODE 2");
 			return null;
 		}
 		else
-		{
 			return curr;
-		}
 	}
-	
 	public void remove(NodeForDeck n)
 	{
 		NodeForDeck curr = front;
 		int i = 0;
 		
-		while (curr != n && curr != null)
+		while(curr != n && curr != null)
 		{
 			curr = curr.getNext();
 			i++;
 		}
-		
-		if (curr != n)
+		if(curr != n)
 		{
 			System.out.println("Node not in list");
 			return;
 		}
-		
 		remove(i);
 	}
 }

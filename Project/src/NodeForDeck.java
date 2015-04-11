@@ -24,4 +24,5 @@ public class NodeForDeck
 	{
 		next = n;
 	}
+
 }
