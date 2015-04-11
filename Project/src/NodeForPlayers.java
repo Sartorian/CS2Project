@@ -1,4 +1,3 @@
-
 class NodeForPlayers
 {
     protected Player playerData;
@@ -37,3 +36,35 @@ class NodeForPlayers
     }
 }
  
+
+/* public class NodeForPlayers 
+{
+	private Player data;
+	private NodeForPlayers next;
+	
+	public NodeForPlayers(Player data, NodeForPlayers next)
+	{
+		this.data = data;
+		this.next = next;
+	}
+	
+	public void setData(Player data2)
+	{
+		this.data = data2;
+	}
+	
+	public void setNext(NodeForPlayers next2)
+	{
+		this.next = next2;
+	}
+	
+	public Player getData()
+	{
+		return this.data;
+	}
+	
+	public NodeForPlayers getNext()
+	{
+		return this.next;
+	}
+} */
