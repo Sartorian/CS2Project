@@ -47,7 +47,8 @@ public class GUI extends JFrame implements ActionListener{
 			panel2.add(userCards[i]);
 		}
 		panel3 = new JPanel();
-		panel3.add(new JLabel("Click a card to play it or click the deck to draw a card."));
+		controls = new JLabel("Click a card to play it or click the deck to draw a card.");
+		panel3.add(controls);
 		add(panel1, BorderLayout.NORTH);
 		add(panel2, BorderLayout.CENTER);
 		add(panel3, BorderLayout.SOUTH);
@@ -116,6 +117,7 @@ public class GUI extends JFrame implements ActionListener{
 				userCards[i].addActionListener(this);
 				panel2.add(userCards[i]);
 			}
+			controls.setText("Click a card to play it or click the deck to draw a card.");
 		}
 		else
 		{

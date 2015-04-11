@@ -47,7 +47,8 @@ public class Play
 					ai.drawCard(gs);
 					ai.playCard(pile, 0);//when you draw, the card is always added to the first index of the hand
 				}
-				currUser = currUser.getNext();
+				currUser = playerOrder.front;
+				gui.update();
 			}
 			else
 			{
