@@ -5,6 +5,7 @@ public class Player
 	private String name;
 	public static String eightSuit = "";//will help with the eight card being played and selecting a suit
 	private boolean ifAI;
+	private boolean canDraw = true;
 
 	public Player(String n, boolean AI)
 	{
@@ -15,6 +16,10 @@ public class Player
 	}
 	public void drawCard(GameSetup d)
 	{
+		if(canDraw == false)
+		{
+			return;
+		}
 		if(d.getDeck().size() == 0)
 		{
 			Play.pile.replenish();
@@ -24,6 +29,7 @@ public class Player
 		{
 			hand.addToFront(d.getDeck().getFrontData());
 			d.getDeck().removeFront();
+			canDraw = false;
 		}
 	}
 
@@ -61,6 +67,7 @@ public class Player
 				}
 				d.getCards().addToFront(curr.getData());//place a copy of the card on top of the discard pile
 				hand.remove(i);//delete copy from hand
+				canDraw = true;
 				return true;//success. A winner is you.
 			}
 		}
@@ -73,5 +80,13 @@ public class Player
 	public String getName()
 	{
 		return name;
+	}
+	public boolean canDraw()
+	{
+		return canDraw;
+	}
+	public void canDraw(boolean b)
+	{
+		canDraw = b;
 	}
 }

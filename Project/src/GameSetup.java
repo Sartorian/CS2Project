@@ -49,6 +49,7 @@ public class GameSetup{ //This could have the makeDeck, Deal, and numberOfPlayer
 			while(test == true)
 			{
 				p.getPlayerData().drawCard(this);
+				p.getPlayerData().canDraw(true);
 				p = p.getNext();
 				if(p == Play.playerOrder.front)
 				{

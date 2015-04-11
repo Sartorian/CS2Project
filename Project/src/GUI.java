@@ -1,25 +1,25 @@
-import java.util.Scanner;
+//import java.util.Scanner;
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
 
-import java.io.*;
-import java.util.ArrayList;
+//import java.io.*;
+//import java.util.ArrayList;
 
 public class GUI extends JFrame implements ActionListener{
 
 
 
-	private JPanel panel1, panel2, panel3, panel4;
-	private JLabel statementA, img, statementB, statementC;
-	private JLabel pan2element, pan3element;
+	private JPanel panel1, panel2, panel3;
+	private JLabel statement, discardPile, controls;
+	//private JLabel pan2element, pan3element;
 
-	private JTextField input;
-	private JButton go;
+	//private JTextField input;
+	private JButton deck;
 	private ImageIcon cardIcon;
 
-	String[] userPngs;						//<-- the card images array for the user's hand.
+	JButton[] userCards;						//<-- the card images array for the user's hand.
 
 	boolean flag = false;
 	public int inputAnswer;
@@ -27,74 +27,101 @@ public class GUI extends JFrame implements ActionListener{
 	public GUI ()
 	{
 		panel1 = new JPanel();          
-		JLabel statement = new JLabel("Here's the first card: ");
+		statement = new JLabel("Here's the first card: ");
+		deck = new JButton(new ImageIcon("src/b1fv.png"));//click to draw
 		panel1.add(statement);
-		cardIcon = new ImageIcon(cardImageFileName(Play.pile.getCards().getFrontData()));  
-		panel1.add(new JLabel(cardIcon));
+
+		cardIcon = new ImageIcon(cardImageFileName(Play.pile.getCards().getFrontData())); 
+		discardPile = new JLabel(cardIcon);
+		panel1.add(discardPile);
+		panel1.add(deck);
+
 		panel2 = new JPanel(new GridLayout(1, Play.currUser.getPlayerData().getHand().size() + 1));// <-- the hand of the player 
 		panel2.add(new JLabel(Play.currUser.getPlayerData().getName()+"'s turn"));
-		userPngs = new String[Play.currUser.getPlayerData().getHand().size()];
+		userCards = new JButton[Play.currUser.getPlayerData().getHand().size()];
 		for (int i=0; i < Play.currUser.getPlayerData().getHand().size(); i++)
 		{
-			String filename = cardImageFileName(Play.currUser.getPlayerData().getHand().get(i)); 	//<-- the card's equivalent images' file name is used (i.e."1.png")	
-			panel2.add(new JLabel(new ImageIcon(filename)));
-		} 
-	}
-
-	public void makeGUI(String heresTheFirstCard, 
-			Card card, 
-			String whoseTurn, 
-			LinkedListForDeck hand, 
-			String question)
-	{		
-		panel1 = new JPanel();          
-		JLabel statement = new JLabel(heresTheFirstCard);
-		panel1.add(statement);
-
-		cardIcon = new ImageIcon(cardImageFileName(card));  
-		panel1.add(new JLabel(cardIcon));
-
-		panel2 = new JPanel(new GridLayout(1, hand.size() + 1));// <-- the hand of the player 
-		panel2.add(new JLabel(whoseTurn));
-
-		userPngs = new String[hand.size()];
-		for (int i=0; i<hand.size(); i++)
-		{
-			String filename = cardImageFileName(hand.get(i)); 	//<-- the card's equivalent images' file name is used (i.e."1.png")	
-			panel2.add(new JLabel(new ImageIcon(filename)));
-		} 
-
+			String filename = cardImageFileName(Play.currUser.getPlayerData().getHand().get(i));//<-- the card's equivalent images' file name is used (i.e."1.png")	
+			userCards[i] = new JButton(new ImageIcon(filename));
+			userCards[i].addActionListener(this);
+			panel2.add(userCards[i]);
+		}
 		panel3 = new JPanel();
-		panel3.add(new JLabel(question));              //<--  at the bottom of the GUI the question is asked
-		//     either which suit or which card number to play.
-
-		input = new JTextField(2);
-		input.setEditable(true);
-		panel3.add(input);
-
-		go = new JButton("Ready");
-		panel3.add(go);
-
+		panel3.add(new JLabel("Click a card to play it or click the deck to draw a card."));
 		add(panel1, BorderLayout.NORTH);
 		add(panel2, BorderLayout.CENTER);
 		add(panel3, BorderLayout.SOUTH);
 
 		setTitle("Crazy Eights");
-		setSize(600, 400);
+		setSize(800, 450);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
+
+
 	public void actionPerformed(ActionEvent e)
 	{
-		input.setEditable(false);
-		String ans = input.getText();
-		inputAnswer = Integer.parseInt(ans);
-		int i = inputAnswer;
-		if(Play.currUser.getPlayerData().playCard(Play.pile, i) == false)
+		if(e.getSource().equals(deck))//if they clicked the deck
 		{
-			input.setEditable(true);
+			if(Play.currUser.getPlayerData().canDraw())//if they did not yet draw
+			{
+				Play.currUser.getPlayerData().drawCard(Play.gs);//draw a card
+				update();
+			}
+			else return;
 		}
+		else
+		{
+			int i;
+			for(i = 0; i < userCards.length; i++)//loops through userCards to find what triggered the event
+			{
+				if(userCards[i]==e.getSource())//when found
+				{
+					break;//end loop
+				}
+			}
+			if(Play.currUser.getPlayerData().playCard(Play.pile, i))//plays the chosen card if possible
+			{
+				update();
+				Play.currUser = Play.currUser.getNext();
+				update();
+			}
+			else
+			{
+				return;
+			}
+		}
+	}
+	public void update()
+	{
+		statement.setText("Last card played:");//gets rid of first turn text
+		panel1.remove(discardPile);
+		panel1.remove(deck);
+		for(int i = 0; i < userCards.length; i++)//clear old hand display
+		{
+			panel2.remove(userCards[i]);
+		}
+		if(Play.currUser == Play.playerOrder.front)
+		{
+			cardIcon = new ImageIcon(cardImageFileName(Play.pile.getCards().getFrontData())); 
+			discardPile = new JLabel(cardIcon);
+			panel1.add(discardPile);
+			panel1.add(deck);
+
+			for (int i=0; i < Play.currUser.getPlayerData().getHand().size(); i++)//show new hand display
+			{
+				String filename = cardImageFileName(Play.currUser.getPlayerData().getHand().get(i));//<-- the card's equivalent images' file name is used (i.e."1.png")	
+				userCards[i] = new JButton(new ImageIcon(filename));
+				userCards[i].addActionListener(this);
+				panel2.add(userCards[i]);
+			}
+		}
+		else
+		{
+			controls.setText("Opponent's turn. Please wait.");
+		}
+
 	}
 
 	public String cardImageFileName(Card card)  //<-- returns the file name string.

@@ -6,10 +6,12 @@ public class Play
 	public static UsedPile pile;
 	public static circleLinkedList playerOrder;
 	public static NodeForPlayers currUser;
+	public static GameSetup gs;
+	public static GUI gui;
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		GameSetup gs = new GameSetup();
+		gs = new GameSetup();
 		Scanner kb = new Scanner(System.in);
 		//Random aiCard = new Random();
 		String playerName = "Player";
@@ -29,14 +31,8 @@ public class Play
 		pile.revealTop();
 		gs.deal();
 		System.out.println("First Card: " + pile.getCards().getFrontData());
-		String comment = "First card: "; //<-- this once-only statement can become "" after the first turn.
 		//GUI SUBSTITUTE:
-		GUI gui = new GUI();
-		gui.makeGUI(comment,
-				pile.getCards().getFrontData(), 
-				user.getName()+"'s turn", 
-				user.getHand(),
-				"Please choose the position of your card");
+		gui = new GUI();
 		while(!userWin && !aiWin)//if win conditions are not met
 		{
 			if (currUser.getPlayerData() == ai)//if it is the AI's turn, we automate it.
@@ -51,8 +47,13 @@ public class Play
 					ai.drawCard(gs);
 					ai.playCard(pile, 0);//when you draw, the card is always added to the first index of the hand
 				}
+				currUser = currUser.getNext();
 			}
-			
+			else
+			{
+				//gui.update();
+				//Thread.sleep(100);
+			}
 		}
 		kb.close();
 		if(userWin)
